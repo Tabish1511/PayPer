@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { ButtonCombo } from "./ButtonCombo"
 
 
 export function Clients(){
@@ -25,23 +26,26 @@ export function Clients(){
     }])
 
     return (
-        <div className="rounded-lg w-11/12 h-5/6 bg-white pb-5 border-solid border-2 border-black">
-            <table className="table-auto">
-            <thead>
-                <tr>
-                <th>Name</th>
-                <th>Item Description</th>
-                <th>Phone</th>
-                <th>Total Amount</th>
-                <th>Deposit</th>
-                <th>Installment Months</th>
-                <th>Due Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {clients.map((client, index) => <Client key={client.id} client={client} index={index} />)}
-            </tbody>
-            </table>
+        <div className="rounded-lg w-11/12 h-5/6 bg-white px-5">
+            <div className="">
+                <table className="table-auto w-full">
+                <thead>
+                    <tr className="h-20">
+                    <th>Name</th>
+                    <th>Item Description</th>
+                    <th>Phone</th>
+                    <th>Total Amount</th>
+                    <th>Deposit</th>
+                    <th>Installment Months</th>
+                    <th>Due Date</th>
+                    <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {clients.map((client, index) => <Client key={client.id} client={client} index={index} />)}
+                </tbody>
+                </table>
+            </div>
         </div>
     )
 }
@@ -63,16 +67,17 @@ interface ClientInterface {
 }
 
 function Client(props: ClientInterface & {index: number} ) {
-    const rowClassName = props.index % 2 === 0 ? "bg-cream-main" : "bg-white";
+    const rowClassName = props.index % 2 === 0 ? "h-20 bg-cream-main text-center" : "h-20 bg-white text-center ";
     return (
             <tr className={rowClassName}>
-            <td>{props.client.name}</td>
+            <td className="">{props.client.name}</td>
             <td>{props.client.itemDescription}</td>
             <td>{props.client.phone}</td>
             <td>{props.client.total}</td>
             <td>{props.client.deposit}</td>
             <td>{props.client.months}</td>
             <td>{props.client.dueDate}</td>
+            <td className=""><ButtonCombo/></td>
             </tr>
     )
 }
