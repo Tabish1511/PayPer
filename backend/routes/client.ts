@@ -62,7 +62,7 @@ router.post("/create", authMiddleware, async (req, res) => {
 })
 
 
-// =============================== EDIT A NEW CLIENT ===============================
+// =============================== EDIT AN EXISTING CLIENT ===============================
 const updatedClientBody = z.object({
     name: z.string().optional(),
 	itemDescription: z.string().optional(),
@@ -125,12 +125,13 @@ router.put("/edit", authMiddleware,async (req, res) => {
 // =============================== CURRENT MONTH INSTALLMENT PAID ===============================
 // EVERYTIME THE 'PAID' BUTTON IS PUSHED THE DATE UPDATES TO THE FOLLOWING MONTH 
 router.patch("/paid", authMiddleware, async (req, res) => {
-    const clientId = req.body.clientId;
+    const id = req.body.id;
+    // console.log(id);
 
     try{
         const client = await prisma.client.findUnique({
             where: {
-            id: clientId
+            id: id
         }
       });
       if(!client){
@@ -143,7 +144,7 @@ router.patch("/paid", authMiddleware, async (req, res) => {
 
       const updatedClient = await prisma.client.update({
         where: {
-            id: clientId
+            id: id
         },
         data: {
             dueDate: newDate
@@ -178,6 +179,43 @@ router.delete("/deleteClient", authMiddleware,async (req, res) => {
     res.status(200).send({
         message: "Client successfully deleted.",
     })
+})
+
+router.get("/bulk", async (req, res) => {
+    const filter: string = typeof req.query.filter === 'string' ? req.query.filter : "";
+
+    const clients = await prisma.client.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: filter,
+                mode: 'insensitive'
+              }
+            },
+            {
+              phone: {
+                contains: filter,
+                mode: 'insensitive'
+              }
+            }
+          ]
+        }
+      });
+
+      res.json({
+        client: clients.map(client => ({
+            id: client.id,
+            name: client.name,
+            itemDescription: client.itemDescription,
+            phone: client.phone,
+            total: client.total,
+            deposit: client.deposit,
+            months: client.months,
+            dueDate: client.dueDate
+        }))
+    })
+      
 })
 
 export default router;

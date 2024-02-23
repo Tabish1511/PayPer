@@ -66,7 +66,7 @@ router.post("/create", middleware_js_1.authMiddleware, (req, res) => __awaiter(v
         message: "Client created successfully",
     });
 }));
-// =============================== EDIT A NEW CLIENT ===============================
+// =============================== EDIT AN EXISTING CLIENT ===============================
 const updatedClientBody = zod_1.z.object({
     name: zod_1.z.string().optional(),
     itemDescription: zod_1.z.string().optional(),
@@ -125,11 +125,12 @@ router.put("/edit", middleware_js_1.authMiddleware, (req, res) => __awaiter(void
 // =============================== CURRENT MONTH INSTALLMENT PAID ===============================
 // EVERYTIME THE 'PAID' BUTTON IS PUSHED THE DATE UPDATES TO THE FOLLOWING MONTH 
 router.patch("/paid", middleware_js_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const clientId = req.body.clientId;
+    const id = req.body.id;
+    // console.log(id);
     try {
         const client = yield prisma.client.findUnique({
             where: {
-                id: clientId
+                id: id
             }
         });
         if (!client) {
@@ -140,7 +141,7 @@ router.patch("/paid", middleware_js_1.authMiddleware, (req, res) => __awaiter(vo
         newDate.setMonth(nextMonth);
         const updatedClient = yield prisma.client.update({
             where: {
-                id: clientId
+                id: id
             },
             data: {
                 dueDate: newDate
@@ -172,6 +173,39 @@ router.delete("/deleteClient", middleware_js_1.authMiddleware, (req, res) => __a
     }
     res.status(200).send({
         message: "Client successfully deleted.",
+    });
+}));
+router.get("/bulk", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const filter = typeof req.query.filter === 'string' ? req.query.filter : "";
+    const clients = yield prisma.client.findMany({
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: filter,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    phone: {
+                        contains: filter,
+                        mode: 'insensitive'
+                    }
+                }
+            ]
+        }
+    });
+    res.json({
+        client: clients.map(client => ({
+            id: client.id,
+            name: client.name,
+            itemDescription: client.itemDescription,
+            phone: client.phone,
+            total: client.total,
+            deposit: client.deposit,
+            months: client.months,
+            dueDate: client.dueDate
+        }))
     });
 }));
 exports.default = router;
