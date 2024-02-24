@@ -160,13 +160,13 @@ router.patch("/paid", authMiddleware, async (req, res) => {
 })
 
 // =============================== DELETE SELECTED CLIENT ===============================
-router.delete("/deleteClient", authMiddleware,async (req, res) => {
-    const clientId = req.body.clientId;
+router.delete("/delete", authMiddleware,async (req, res) => {
+    const id = req.body.id;
 
     try{
       const deletedClient = await prisma.client.delete({
         where: {
-            id: clientId
+            id: id
         }
       })
       if(!deletedClient){
@@ -181,6 +181,7 @@ router.delete("/deleteClient", authMiddleware,async (req, res) => {
     })
 })
 
+// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE ===============================
 router.get("/bulk", async (req, res) => {
     const filter: string = typeof req.query.filter === 'string' ? req.query.filter : "";
 

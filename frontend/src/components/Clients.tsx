@@ -31,7 +31,7 @@ export function Clients(){
             <div className="my-2">
                 <input onChange={e => {
                     setFilter(e.target.value);
-                }} type="text" placeholder="Search clients..." className="w-full px-2 py-1 border rounded border-slate-400"></input>
+                }} type="text" placeholder="Search clients by name or phone..." className="w-full px-2 py-1 border rounded border-slate-400"></input>
             </div>
             <div className="">
                 <table className="table-auto w-full">

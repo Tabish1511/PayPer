@@ -156,12 +156,12 @@ router.patch("/paid", middleware_js_1.authMiddleware, (req, res) => __awaiter(vo
     });
 }));
 // =============================== DELETE SELECTED CLIENT ===============================
-router.delete("/deleteClient", middleware_js_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const clientId = req.body.clientId;
+router.delete("/delete", middleware_js_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.body.id;
     try {
         const deletedClient = yield prisma.client.delete({
             where: {
-                id: clientId
+                id: id
             }
         });
         if (!deletedClient) {
@@ -175,6 +175,7 @@ router.delete("/deleteClient", middleware_js_1.authMiddleware, (req, res) => __a
         message: "Client successfully deleted.",
     });
 }));
+// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE ===============================
 router.get("/bulk", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filter = typeof req.query.filter === 'string' ? req.query.filter : "";
     const clients = yield prisma.client.findMany({
