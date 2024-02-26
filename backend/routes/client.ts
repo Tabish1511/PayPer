@@ -219,6 +219,39 @@ router.get("/bulk", async (req, res) => {
       
 })
 
+// =============================== GET SINGLE CLIENT BY 'ID' RECIEVED ===============================
+router.get("/single", async (req, res) => {
+  const idParam = req.query.id;
+  const id = typeof idParam === 'string' ? parseInt(idParam) : NaN;
+
+  if (isNaN(id)) {
+    return res.status(400).send("Invalid id parameter");
+  }
+
+  const client = await prisma.client.findUnique({
+    where: {
+    id: id
+    }
+  });
+  if(!client){
+  return res.status(404).send("Client not found");
+  }
+
+    res.json({
+      client: {
+        id: client.id,
+        name: client.name,
+        itemDescription: client.itemDescription,
+        phone: client.phone,
+        total: client.total,
+        deposit: client.deposit,
+        months: client.months,
+        dueDate: client.dueDate
+      }
+  })
+    
+})
+
 export default router;
 
 

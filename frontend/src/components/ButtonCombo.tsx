@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { SmallButton } from "./SmallButton";
 
 interface ButtonComboInterface{
@@ -6,6 +7,7 @@ interface ButtonComboInterface{
 }
 
 export function ButtonCombo(props: ButtonComboInterface){
+    const navigate = useNavigate();
     return (
         <div className="flex flex-nowrap justify-center">
             <SmallButton 
@@ -20,7 +22,10 @@ export function ButtonCombo(props: ButtonComboInterface){
                     }
                 })
             }} /> {/* // PAYMENT DONE */}
-            <SmallButton label="+"  /> {/* // EDIT CLIENT */}
+            <SmallButton label="+"  
+            onClick={()=>{
+                navigate('/editClient?id=' + props.id)
+            }} /> {/* // EDIT CLIENT */}
             <SmallButton label="-"
             onClick={()=>{
                 axios.delete("http://localhost:3000/api/v1/client/delete", {

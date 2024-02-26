@@ -66,7 +66,7 @@ function Client(props: ClientInterface & {index: number} ) {
             <td>{props.client.total}</td>
             <td>{props.client.deposit}</td>
             <td>{props.client.months}</td>
-            <td>{props.client.dueDate}</td>
+            <td>{props.client.dueDate.split('T')[0]}</td>
             <td><ButtonCombo id={props.client.id} /></td>
             </tr>
     )

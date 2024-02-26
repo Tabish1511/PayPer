@@ -82,7 +82,18 @@ router.put("/edit", middleware_js_1.authMiddleware, (req, res) => __awaiter(void
     console.log(req.body);
     const { clientId, name, itemDescription, phone, totalAmount, deposit, months, date } = req.body;
     const newDate = new Date(date);
-    const clientData = updatedClientBody.safeParse({ name, itemDescription, phone, totalAmount, deposit, months, newDate });
+    // this may need to be fixed later =======================
+    const data = {
+        name: name,
+        itemDescription: itemDescription,
+        phone: phone,
+        totalAmount: totalAmount,
+        deposit: deposit,
+        months: months,
+        newDate: newDate
+    };
+    const clientData = updatedClientBody.safeParse(data);
+    // this may need to be fixed later =======================
     if (!clientData.success) {
         return res.status(411).json({
             message: "Incorrect inputs"
@@ -207,6 +218,34 @@ router.get("/bulk", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             months: client.months,
             dueDate: client.dueDate
         }))
+    });
+}));
+// =============================== GET SINGLE CLIENT BY 'ID' RECIEVED ===============================
+router.get("/single", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idParam = req.query.id;
+    const id = typeof idParam === 'string' ? parseInt(idParam) : NaN;
+    if (isNaN(id)) {
+        return res.status(400).send("Invalid id parameter");
+    }
+    const client = yield prisma.client.findUnique({
+        where: {
+            id: id
+        }
+    });
+    if (!client) {
+        return res.status(404).send("Client not found");
+    }
+    res.json({
+        client: {
+            id: client.id,
+            name: client.name,
+            itemDescription: client.itemDescription,
+            phone: client.phone,
+            total: client.total,
+            deposit: client.deposit,
+            months: client.months,
+            dueDate: client.dueDate
+        }
     });
 }));
 exports.default = router;
