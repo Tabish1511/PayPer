@@ -4,7 +4,7 @@ interface InputBoxProps {
     id: string;
     name: string;
     placeholder?: string;
-    value: string | number;
+    value?: string | number;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
