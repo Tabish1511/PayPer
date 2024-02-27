@@ -5,10 +5,12 @@ import { Button } from "../components/Button"
 import { BottomWarning } from "../components/BottomWarning"
 import axios from "axios"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export function Signin(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     return (
         <div className="bg-cream-main h-screen flex justify-center">
@@ -28,6 +30,7 @@ export function Signin(){
                             password
                         });
                         localStorage.setItem("token", response.data.token);
+                        navigate("/dashboard");
                     }} label="Sign Up" />
                     <BottomWarning warning="Don't have an account? " link="Sign up" to={"/signup"}/>
                 </div>

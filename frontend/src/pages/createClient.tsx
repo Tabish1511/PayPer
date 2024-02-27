@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { Appbar } from "../components/Appbar"
 import { Button } from "../components/Button"
 import { Heading } from "../components/Heading"
@@ -13,6 +14,7 @@ export function CreateClient() {
     const [totalAmount, setTotal] = useState("");
     const [deposit, setDeposit] = useState("");
     const [months, setMonths] = useState("");
+    const navigate = useNavigate();
 
     return (
         <div className="h-screen flex flex-col">
@@ -61,6 +63,7 @@ export function CreateClient() {
                                     Authorization: "Bearer " + localStorage.getItem("token")
                                 }
                             });
+                            navigate("/dashboard");
                         }} label="Submit" />
                         <SubHeading label="Due date will automatically set today's date for next month" /> {/* decide if this message stays or not */}
                     </div>

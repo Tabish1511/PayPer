@@ -25,7 +25,8 @@ export function Clients(){
         .then(response => {
             setClients(response.data.client);
         })
-    }, [filter])
+    }, [filter])   
+    // }, [filter, clients])//<<== CLIENT MAKES THE PAGE RELOAD CONSTANTLY
     return (
         <div className="rounded-lg w-11/12 h-5/6 bg-white px-5">
             <div className="my-2">

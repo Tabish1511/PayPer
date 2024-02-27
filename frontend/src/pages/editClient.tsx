@@ -4,7 +4,7 @@ import { Heading } from "../components/Heading"
 import { InputBox } from "../components/InputBox"
 import { SubHeading } from "../components/SubHeading"
 import axios from "axios"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 
@@ -23,7 +23,7 @@ interface Client {
 export function EditClient() {
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
-    const [client, setClient] = useState<Client | null>(null);
+    const [client, setClient] = useState<Client>();
     const [name, setName] = useState("");
     const [itemDescription, setItem] = useState("");
     const [phone, setPhone] = useState("");
@@ -31,6 +31,7 @@ export function EditClient() {
     const [deposit, setDeposit] = useState("");
     const [months, setMonths] = useState("");
     const [date, setDate] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id) { // Check if id is not null or undefined
@@ -108,9 +109,18 @@ export function EditClient() {
                                 headers: {
                                     Authorization: "Bearer " + localStorage.getItem("token")
                                 }
-                            });
+                            })
+                            .then(response => {
+                                if(response.status === 200){
+                                    navigate("/dashboard");
+                                }else{
+                                    console.error("Status code not 200");
+                                }
+                            })
+                            .catch((error) => {
+                                console.log('Error: ', error)
+                            })
                             }
-                            
                         }} label="Submit" />
                     </div>
                 </div>
