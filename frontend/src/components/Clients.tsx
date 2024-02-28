@@ -58,9 +58,8 @@ export function Clients(){
 }
 
 function Client(props: ClientInterface & {index: number} ) {
-    const rowClassName = props.index % 2 === 0 ? "h-20 bg-cream-main text-center" : "h-20 bg-white text-center ";
     return (
-            <tr className={rowClassName}>
+            <tr className="h-20 text-center odd:bg-white  even:bg-cream-main">
             <td>{props.client.name}</td>
             <td>{props.client.itemDescription}</td>
             <td>{props.client.phone}</td>

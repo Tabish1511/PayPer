@@ -6,6 +6,7 @@ import { BottomWarning } from "../components/BottomWarning"
 import axios from "axios"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { SmallButton } from "../components/SmallButton"
 
 export function Signup(){
     const [username, setUsername] = useState("");
