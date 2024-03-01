@@ -58,12 +58,6 @@ router.post('/signup', async (req, res) => {
         message: "User created successfully",
         token: jwtToken
     });
-    // Send the redirect URL along with the response
-    // res.status(200).send({
-    //     message: "User created successfully",
-    //     token: jwtToken,
-    //     redirectURL: '/dashboard' // Include the redirect URL
-    // });
 });
 
 // SIGN IN IF YOU ALREADY HAVE AN ACCOUNT ================================
@@ -75,8 +69,6 @@ const signinBody = z.object({
 
 router.post('/signin', async (req, res) => {
     const {username, password} = req.body;
-    // const userData = signinBody.parse({username, password});
-    // console.log(req.headers.authorization);
 
     const isUser = await prisma.user.findFirst({
         where: {
@@ -86,25 +78,19 @@ router.post('/signin', async (req, res) => {
     })
     if(!isUser){
         res.status(411).send({
-            message: "Error while logging in."
+            message: "Wrong credentials while logging in."
         });
         return;
     };
 
     const userId = isUser.id;
-    console.log(userId);
+    // console.log(userId);
     const jwtToken = jwt.sign({userId}, JWT_SECRET);
 
     // Add redirection to dashboard
     res.status(200).send({
         token: jwtToken
     });
-    // Send the redirect URL along with the response
-    // res.status(200).send({
-    //     message: "User created successfully",
-    //     token: jwtToken,
-    //     redirectURL: '/dashboard' // Include the redirect URL
-    // });
 });
 
 

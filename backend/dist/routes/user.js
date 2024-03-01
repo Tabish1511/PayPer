@@ -63,12 +63,6 @@ router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function*
         message: "User created successfully",
         token: jwtToken
     });
-    // Send the redirect URL along with the response
-    // res.status(200).send({
-    //     message: "User created successfully",
-    //     token: jwtToken,
-    //     redirectURL: '/dashboard' // Include the redirect URL
-    // });
 }));
 // SIGN IN IF YOU ALREADY HAVE AN ACCOUNT ================================
 // You can use the following zod schema to verify 'signin' inputs
@@ -78,8 +72,6 @@ const signinBody = zod_1.z.object({
 });
 router.post('/signin', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
-    // const userData = signinBody.parse({username, password});
-    // console.log(req.headers.authorization);
     const isUser = yield prisma.user.findFirst({
         where: {
             username: username,
@@ -88,23 +80,17 @@ router.post('/signin', (req, res) => __awaiter(void 0, void 0, void 0, function*
     });
     if (!isUser) {
         res.status(411).send({
-            message: "Error while logging in."
+            message: "Wrong credentials while logging in."
         });
         return;
     }
     ;
     const userId = isUser.id;
-    console.log(userId);
+    // console.log(userId);
     const jwtToken = jsonwebtoken_1.default.sign({ userId }, config_js_1.default);
     // Add redirection to dashboard
     res.status(200).send({
         token: jwtToken
     });
-    // Send the redirect URL along with the response
-    // res.status(200).send({
-    //     message: "User created successfully",
-    //     token: jwtToken,
-    //     redirectURL: '/dashboard' // Include the redirect URL
-    // });
 }));
 exports.default = router;

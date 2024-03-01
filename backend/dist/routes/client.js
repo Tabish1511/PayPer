@@ -82,18 +82,7 @@ router.put("/edit", middleware_js_1.authMiddleware, (req, res) => __awaiter(void
     console.log(req.body);
     const { clientId, name, itemDescription, phone, totalAmount, deposit, months, date } = req.body;
     const newDate = new Date(date);
-    // this may need to be fixed later =======================
-    const data = {
-        name: name,
-        itemDescription: itemDescription,
-        phone: phone,
-        totalAmount: totalAmount,
-        deposit: deposit,
-        months: months,
-        newDate: newDate
-    };
-    const clientData = updatedClientBody.safeParse(data);
-    // this may need to be fixed later =======================
+    const clientData = updatedClientBody.safeParse({ name, itemDescription, phone, totalAmount, deposit, months, newDate });
     if (!clientData.success) {
         return res.status(411).json({
             message: "Incorrect inputs"
@@ -186,39 +175,47 @@ router.delete("/delete", middleware_js_1.authMiddleware, (req, res) => __awaiter
         message: "Client successfully deleted.",
     });
 }));
-// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE ===============================
-router.get("/bulk", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const filter = typeof req.query.filter === 'string' ? req.query.filter : "";
-    const clients = yield prisma.client.findMany({
-        where: {
-            OR: [
-                {
-                    name: {
-                        contains: filter,
-                        mode: 'insensitive'
+// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE (SPECIFIC USER'S CLIENTS) ===============================
+router.get("/bulk", middleware_js_1.authMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const filter = typeof req.query.filter === 'string' ? req.query.filter : "";
+        const id = req.userId;
+        const clients = yield prisma.client.findMany({
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: filter,
+                            mode: 'insensitive'
+                        }
+                    },
+                    {
+                        phone: {
+                            contains: filter,
+                            mode: 'insensitive'
+                        }
                     }
-                },
-                {
-                    phone: {
-                        contains: filter,
-                        mode: 'insensitive'
-                    }
-                }
-            ]
-        }
-    });
-    res.json({
-        client: clients.map(client => ({
-            id: client.id,
-            name: client.name,
-            itemDescription: client.itemDescription,
-            phone: client.phone,
-            total: client.total,
-            deposit: client.deposit,
-            months: client.months,
-            dueDate: client.dueDate
-        }))
-    });
+                ],
+                userId: id
+            }
+        });
+        res.json({
+            client: clients.map(client => ({
+                id: client.id,
+                name: client.name,
+                itemDescription: client.itemDescription,
+                phone: client.phone,
+                total: client.total,
+                deposit: client.deposit,
+                months: client.months,
+                dueDate: client.dueDate
+            }))
+        });
+    }
+    catch (error) {
+        console.error("error fetching clients (backend): ", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }));
 // =============================== GET SINGLE CLIENT BY 'ID' RECIEVED ===============================
 router.get("/single", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -181,11 +181,14 @@ router.delete("/delete", authMiddleware,async (req, res) => {
     })
 })
 
-// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE ===============================
-router.get("/bulk", async (req, res) => {
-    const filter: string = typeof req.query.filter === 'string' ? req.query.filter : "";
+// =============================== GET ALL CLIENTS OR SEARCHED BY NAME AND/OR PHONE (SPECIFIC USER'S CLIENTS) ===============================
+router.get("/bulk", authMiddleware, async (req, res) => {
+    try{
+      const filter: string = typeof req.query.filter === 'string' ? req.query.filter : "";
+      const id = (req as CustomRequest).userId;
 
-    const clients = await prisma.client.findMany({
+
+      const clients = await prisma.client.findMany({
         where: {
           OR: [
             {
@@ -200,23 +203,27 @@ router.get("/bulk", async (req, res) => {
                 mode: 'insensitive'
               }
             }
-          ]
+          ],
+          userId: id
         }
       });
 
-      res.json({
-        client: clients.map(client => ({
-            id: client.id,
-            name: client.name,
-            itemDescription: client.itemDescription,
-            phone: client.phone,
-            total: client.total,
-            deposit: client.deposit,
-            months: client.months,
-            dueDate: client.dueDate
-        }))
-    })
-      
+        res.json({
+          client: clients.map(client => ({
+              id: client.id,
+              name: client.name,
+              itemDescription: client.itemDescription,
+              phone: client.phone,
+              total: client.total,
+              deposit: client.deposit,
+              months: client.months,
+              dueDate: client.dueDate
+          }))
+      })
+    }catch(error){
+      console.error("error fetching clients (backend): ", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
 })
 
 // =============================== GET SINGLE CLIENT BY 'ID' RECIEVED ===============================
