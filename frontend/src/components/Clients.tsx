@@ -45,7 +45,7 @@ export function Clients(){
             <div className="">
                 <table className="table-auto w-full">
                 <thead>
-                    <tr className="h-20">
+                    <tr className="h-14">
                     <th>Name</th>
                     <th>Item Description</th>
                     <th>Phone</th>
@@ -67,7 +67,7 @@ export function Clients(){
 
 function Client(props: ClientInterface & {index: number} ) {
     return (
-            <tr className="h-20 text-center odd:bg-white  even:bg-cream-main">
+            <tr className="h-14 text-center odd:bg-cream-main even:bg-white">
             <td>{props.client.name}</td>
             <td>{props.client.itemDescription}</td>
             <td>{props.client.phone}</td>
