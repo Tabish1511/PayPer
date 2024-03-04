@@ -17,19 +17,19 @@ To install the dependencies run `npm install`.
 After dependency installation, to run the backend locally run `cd dist` and then run `node index.js`.  
 
 ### Frontend:
-From the project's root directory run `cd PayPer/frontend`.
-To install the dependencies run `npm install`.
-After dependency installation, to run the frontend locally run `npm run dev`.
+From the project's root directory run `cd PayPer/frontend`.  
+To install the dependencies run `npm install`.  
+After dependency installation, to run the frontend locally run `npm run dev`.  
 
 # Usage:
-*It is a web appp so it can be accessed on any device and from any location (No longer ties you to your workplace computer/s)
-*Intuitive react.js and tailwind powered UI makes it simple to manage clients. (Little to no training required)
-*Everytime changes made in your **PayPer** space eg. create/edit/delete/paid client, the admin gets notified in real-time. (Specifically useful for business owners on the move)
-*Sign Up/Sign In uses web-token technology to make your **PayPer** space safe.
-*Each time a client is created the 'due-date' will initialize with today's date but for the following month
-*Edit client details as well as the due-dates.
+*It is a web appp so it can be accessed on any device and from any location (No longer ties you to your workplace computer/s)  
+*Intuitive react.js and tailwind powered UI makes it simple to manage clients. (Little to no training required)  
+*Everytime changes made in your **PayPer** space eg. create/edit/delete/paid client, the admin gets notified in real-time. (Specifically useful for business owners on the move)  
+*Sign Up/Sign In uses web-token technology to make your **PayPer** space safe.  
+*Each time a client is created the 'due-date' will initialize with today's date but for the following month  
+*Edit client details as well as the due-dates.  
 
 # Contributing:
 ### Refer to 'Quick Start' section
-If you'd like to contribute your awesome ideas, please fork the repo and open a pull request.
+If you'd like to contribute your awesome ideas, please fork the repo and open a pull request.  
 All ideas are welcome :)
