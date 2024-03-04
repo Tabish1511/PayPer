@@ -9,12 +9,12 @@ There are a lot of ways to keep tabs on monthly owing clients but none of them n
 
 # Quick Start:
 ### Clone repo into your machine:
-Run `git clone git@github.com:Tabish1511/PayPer.git`
+Run `git clone git@github.com:Tabish1511/PayPer.git`  
 
 ### Backend:
-From the project's root directory run `cd PayPer/backend`.
-To install the dependencies run `npm install`.
-After dependency installation, to run the backend locally run `cd dist` and then run `node index.js`.
+From the project's root directory run `cd PayPer/backend`.  
+To install the dependencies run `npm install`.  
+After dependency installation, to run the backend locally run `cd dist` and then run `node index.js`.  
 
 ### Frontend:
 From the project's root directory run `cd PayPer/frontend`.
