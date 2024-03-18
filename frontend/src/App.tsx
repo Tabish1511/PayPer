@@ -4,7 +4,6 @@ import { Signin } from './pages/signin';
 import { CreateClient } from './pages/createClient';
 import { EditClient } from './pages/editClient';
 import { Dashboard } from './pages/dashboard';
-// import SendMoney from './pages/send';
 
 function App() {
   return (
@@ -15,7 +14,8 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/createClient" element={<CreateClient />} />
           <Route path="/editClient" element={<EditClient />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={localStorage.getItem("token") ? (<Dashboard />) : (<Signin />)} />
+
         </Routes>
       </BrowserRouter>
     </>
