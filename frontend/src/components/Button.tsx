@@ -1,11 +1,12 @@
 interface ButtonProps{
     label: string;
     onClick?: () => void;
+    className?: string;
 }
 
 export function Button(props: ButtonProps){
     return (
-        <div className="mx-6 mt-4 flex justify-center">
+        <div className={`mx-6 mt-4 flex justify-center ${props.className}`}>
             <button 
             onClick={props.onClick} 
             type="button" 

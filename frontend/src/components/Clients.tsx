@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { ButtonCombo } from "./ButtonCombo"
+import { Button } from "./Button"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 interface ClientInterface {
     client: {
@@ -19,6 +21,7 @@ interface ClientInterface {
 export function Clients(){
     const [clients, setClients] = useState([])
     const [filter, setFilter] = useState("")
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -37,10 +40,13 @@ export function Clients(){
     
     return (
         <div className="rounded-lg w-11/12 h-5/6 bg-white px-5">
-            <div className="my-2">
-                <input onChange={e => {
-                    setFilter(e.target.value);
-                }} type="text" placeholder="Search clients by name or phone..." className="w-full px-2 py-1 border rounded border-slate-400"></input>
+            <div className="grid grid-cols-6 gap-4">
+                <div className="col-span-5 mt-4 flex justify-center rounded-lg">
+                    <input onChange={e => {
+                        setFilter(e.target.value);
+                    }} type="text" placeholder="Search clients by name or phone..." className="w-full px-2 py-1 border rounded border-slate-400"></input>
+                </div>
+                <Button label="New Client" className="mx-0" onClick={()=>{navigate("/createClient")}} />
             </div>
             <div className="">
                 <table className="table-auto w-full">
