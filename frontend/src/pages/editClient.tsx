@@ -112,7 +112,7 @@ export function EditClient() {
                             })
                             .then(response => {
                                 if(response.status === 200){
-                                    navigate("/dashboard");
+                                    navigate("/");
                                 }else{
                                     console.error("Status code not 200");
                                 }
