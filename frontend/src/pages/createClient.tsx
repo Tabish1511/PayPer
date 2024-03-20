@@ -16,6 +16,28 @@ export function CreateClient() {
     const [months, setMonths] = useState("");
     const navigate = useNavigate();
 
+    const handleSubmit = async () => {
+        try {
+            const response = await axios.post("http://localhost:3000/api/v1/client/create", {
+                name,
+                itemDescription,
+                phone,
+                totalAmount: parseFloat(totalAmount),
+                deposit: parseFloat(deposit),
+                months: parseInt(months)
+            }, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("token")
+                }
+            });
+            if (response.status === 200) {
+                navigate("/");
+            }
+        } catch (error) {
+            console.error('Error creating client:', error);
+        }
+    };
+
     return (
         <div className="h-screen flex flex-col">
             <Appbar initial="U"/>
@@ -49,29 +71,11 @@ export function CreateClient() {
                                 }} label="Months" type="number" id="months" name="months" placeholder="Eg. 6" />
                             </div>
                         </div>
-                        {/* <InputBox label="Due Date" type="date" id="dueDate" name="dueDate" /> */}
-                        <Button onClick={() => {
-                            axios.post("http://localhost:3000/api/v1/client/create", {
-                                name,
-                                itemDescription,
-                                phone,
-                                totalAmount: parseFloat(totalAmount),
-                                deposit: parseFloat(deposit),
-                                months: parseInt(months)
-                            }, {
-                                headers: {
-                                    Authorization: "Bearer " + localStorage.getItem("token")
-                                }
-                            });
-                            navigate("/");
-                        }} label="Submit" />
-                        <SubHeading label="Due date will automatically set today's date for next month" /> {/* decide if this message stays or not */}
+                        <Button onClick={handleSubmit} label="Submit" />
+                        <SubHeading label="Due date will automatically set today's date for next month" />
                     </div>
                 </div>
             </div>
         </div>
     )
 }
-
-
-// MAKE THIS PAGE REDIRECT TO DASHBOARD ON SUCCESS
