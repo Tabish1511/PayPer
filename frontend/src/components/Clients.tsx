@@ -143,12 +143,12 @@ export function Clients() {
                         })}
                     </tbody>
                 </table>
-                <div className="flex justify-center mt-3">
-                <div className="flex flex-col justify-center">
+                <div className="flex justify-center mt-3 border-solid border-2 border-black">
+                <div className="flex flex-col justify-center">  {/* <<<<<<<<==== FIX THIS PRONTO!!! */}
                     <Button label="Prev" className="mt-0" onClick={previousPage} />
                 </div>
                     <span className="flex flex-col justify-center"> {pageIndex+1} 0f {pageCount} </span>
-                <div className="flex flex-col justify-center">
+                <div className="flex flex-col justify-center">  {/* <<<<<<<<==== FIX THIS PRONTO!!! */}
                     <Button label="Next" className="mt-0" onClick={nextPage} />
                 </div>
                 </div>

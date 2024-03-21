@@ -9,6 +9,15 @@ interface ButtonComboInterface{
 export function ButtonCombo(props: ButtonComboInterface){
     const navigate = useNavigate();
     return (
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <div className="flex flex-nowrap justify-center">
             <SmallButton 
             label="✓" 
@@ -22,6 +31,22 @@ export function ButtonCombo(props: ButtonComboInterface){
                     }
                 })
             }} /> {/* // PAYMENT DONE */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <SmallButton label="+"  
             onClick={()=>{
                 navigate('/editClient?id=' + props.id)

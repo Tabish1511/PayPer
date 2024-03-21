@@ -4,6 +4,9 @@ import { Signin } from './pages/signin';
 import { CreateClient } from './pages/createClient';
 import { EditClient } from './pages/editClient';
 import { Dashboard } from './pages/dashboard';
+// import { testModal } from './pages/testModal';
+// import { testModal } from './pages/testModal';
+import { Modal } from './components/Modal';
 
 function App() {
   return (
@@ -15,7 +18,7 @@ function App() {
           <Route path="/createClient" element={<CreateClient />} />
           <Route path="/editClient" element={<EditClient />} />
           <Route path="/" element={localStorage.getItem("token") ? (<Dashboard />) : (<Signin />)} />
-
+          <Route path="/testModal" element={<Modal/>} />
         </Routes>
       </BrowserRouter>
     </>
