@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { SmallButton } from "./SmallButton";
+import { useState } from "react";
+import Modal from "./Modal";
 
 interface ButtonComboInterface{
     id: number;
@@ -8,60 +10,48 @@ interface ButtonComboInterface{
 
 export function ButtonCombo(props: ButtonComboInterface){
     const navigate = useNavigate();
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
     
     
     return (
         
-        
-        
-        
-        
-        
-        
-        
-        
         <div className="flex flex-nowrap justify-center">
-            <SmallButton 
-            label="✓" 
-            // id={props.id} 
-            onClick={()=>{
-                axios.patch("http://localhost:3000/api/v1/client/paid", {
-                    id: props.id
-                }, {
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem("token")
-                    }
-                })
-            }} /> {/* // PAYMENT DONE */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+            <SmallButton label="✓" onClick={openModal} />
+            <Modal isOpen={modalOpen} onClose={closeModal} clientId={props.id}>
+            </Modal>    {/* CLIENT PAID BUTTON */}
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             <SmallButton label="+"  
             onClick={()=>{
                 navigate('/editClient?id=' + props.id)
             }} /> {/* // EDIT CLIENT */}
+            
             <SmallButton label="-"
             onClick={()=>{
                 axios.delete("http://localhost:3000/api/v1/client/delete", {
@@ -74,3 +64,44 @@ export function ButtonCombo(props: ButtonComboInterface){
         </div>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <SmallButton 
+            label="✓" 
+            // id={props.id} 
+            onClick={()=>{
+                axios.patch("http://localhost:3000/api/v1/client/paid", {
+                    id: props.id
+                }, {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token")
+                    }
+                })
+            }} /> // PAYMENT DONE */}

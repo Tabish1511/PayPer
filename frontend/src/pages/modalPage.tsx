@@ -15,11 +15,11 @@ export const ModalPage: React.FC = () => {
   return (
     <div>
       <button onClick={openModal}>Open Modal</button>
-      <Modal isOpen={modalOpen} onClose={closeModal}>
+      {/* <Modal isOpen={modalOpen} onClose={closeModal}>
         <h2>Modal Content</h2>
         <p>This is the content of the modal.</p>
         <button onClick={closeModal}>Close Modal</button>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };
