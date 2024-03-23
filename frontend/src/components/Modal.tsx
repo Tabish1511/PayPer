@@ -1,6 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { Button } from './Button';
 import axios from 'axios';
+import { Heading } from './Heading';
+import { SubHeading } from './SubHeading';
 
 interface ModalProps {
   isOpen: boolean;
@@ -27,12 +29,17 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, clientId }) => {
     }
   };
 
-
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center" onClick={onClose}>
-      <div className="bg-white p-5 h-80 w-96 rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <Button label="No" onClick={onClose} />
-        <Button label='Yes' onClick={handleYesButtonClick} />
+      <div className="bg-white p-5 h-72 w-96 rounded-lg shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <div className="mt-3">
+          <Heading label="Payment received" />
+          <SubHeading label="Are you sure you would like to perform this action?" />
+          <div className='flex justify-center'>
+            <Button label="No" onClick={onClose} className="w-32" />
+            <Button label="Yes" onClick={handleYesButtonClick} className="w-32" />
+          </div>
+        </div>
       </div>
     </div>
   );
