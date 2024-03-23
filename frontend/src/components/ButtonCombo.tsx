@@ -10,98 +10,81 @@ interface ButtonComboInterface{
 
 export function ButtonCombo(props: ButtonComboInterface){
     const navigate = useNavigate();
-    const [modalOpen, setModalOpen] = useState(false);
+    const [paymentModalOpen, setPaymentModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-    const openModal = () => {
-        setModalOpen(true);
+    const openPaymentModal = () => {
+        setPaymentModalOpen(true);
     };
 
-    const closeModal = () => {
-        setModalOpen(false);
+    const closePaymentModal = () => {
+        setPaymentModalOpen(false);
+    };
+
+    const openDeleteModal = () => {
+        setDeleteModalOpen(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteModalOpen(false);
     };
     
     
     return (
-        
         <div className="flex flex-nowrap justify-center">
-            
-            
-            
-            <SmallButton label="✓" onClick={openModal} />
-            <Modal isOpen={modalOpen} onClose={closeModal} clientId={props.id}>
-            </Modal>    {/* CLIENT PAID BUTTON */}
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            <SmallButton label="+"  
-            onClick={()=>{
-                navigate('/editClient?id=' + props.id)
-            }} /> {/* // EDIT CLIENT */}
-            
-            <SmallButton label="-"
-            onClick={()=>{
-                axios.delete("http://localhost:3000/api/v1/client/delete", {
-                    data: {id: props.id},
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem("token")
+            <SmallButton label="✓" onClick={openPaymentModal} />
+            <Modal
+                isOpen={paymentModalOpen}
+                onClose={closePaymentModal}
+                heading="Payment Received"
+                subHeading="Are you sure you want to continue with this payment?"
+                onClick={async () => {
+                try {
+                    await axios.patch(
+                    "http://localhost:3000/api/v1/client/paid",
+                    {
+                        id: props.id,
+                    },
+                    {
+                        headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token"),
+                        },
                     }
-                })
-            }}/> {/* // DELETE CLIENT ========== DO THIS NEXT!!!!*/}
+                    );
+                    closePaymentModal();
+                } catch (error) {
+                    console.error("Error occurred while updating client:", error);
+                }
+                }}
+            ></Modal> {/* CLIENT PAID */}
+            
+            <SmallButton
+                label="+"
+                onClick={() => {
+                navigate("/editClient?id=" + props.id);
+                }}
+            />  {/* EDIT CLIENT */}
+            
+            <SmallButton label="-" onClick={openDeleteModal} />
+            <Modal
+                isOpen={deleteModalOpen}
+                onClose={closeDeleteModal}
+                heading="Delete Client"
+                subHeading="Are you sure you want to continue with this deletion?"
+                onClick={async () => {
+                try {
+                    await axios.delete("http://localhost:3000/api/v1/client/delete", {
+                    data: { id: props.id },
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("token"),
+                    },
+                    });
+                    closeDeleteModal();
+                } catch (error) {
+                    console.error("Error occurred while deleting client:", error);
+                }
+                }}
+            ></Modal>   {/* DELETE CLIENT */}
         </div>
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <SmallButton 
-            label="✓" 
-            // id={props.id} 
-            onClick={()=>{
-                axios.patch("http://localhost:3000/api/v1/client/paid", {
-                    id: props.id
-                }, {
-                    headers: {
-                        Authorization: "Bearer " + localStorage.getItem("token")
-                    }
-                })
-            }} /> // PAYMENT DONE */}
