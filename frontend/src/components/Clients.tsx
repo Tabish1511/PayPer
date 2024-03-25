@@ -147,7 +147,7 @@ export function Clients() {
                     <div className="pb-4">
                         <Button label="Prev" className="mt-0" onClick={previousPage} />
                     </div>
-                        <span className="flex flex-col justify-center"> {pageIndex+1} 0f {pageCount} </span>
+                        <span className="flex flex-col justify-center"> {pageIndex+1} of {pageCount} </span>
                     <div className="pb-4">
                         <Button label="Next" className="mt-0" onClick={nextPage} />
                     </div>
