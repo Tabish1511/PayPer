@@ -5,7 +5,7 @@ import { Button } from "../components/Button"
 import { BottomWarning } from "../components/BottomWarning"
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, redirect } from "react-router-dom"
 
 export function Signin(){
     const [username, setUsername] = useState("");
@@ -30,7 +30,8 @@ export function Signin(){
                             password
                         });
                         localStorage.setItem("token", response.data.token);
-                        navigate("/");
+                        // navigate("/");
+                        return redirect("/");
                         console.log("Navigate to '/'");
                     }} label="Sign Up" />
                     <BottomWarning warning="Don't have an account? " link="Sign up" to={"/signup"}/>
