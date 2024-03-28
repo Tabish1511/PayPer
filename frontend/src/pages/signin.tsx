@@ -31,6 +31,7 @@ export function Signin(){
                         });
                         localStorage.setItem("token", response.data.token);
                         navigate("/");
+                        console.log("Navigate to '/'");
                     }} label="Sign Up" />
                     <BottomWarning warning="Don't have an account? " link="Sign up" to={"/signup"}/>
                 </div>
