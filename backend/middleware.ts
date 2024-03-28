@@ -10,6 +10,13 @@ if (!JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined in the environment variables.');
 }
 
+export const config = {
+  runtime: "edge",
+  unstable_allowDynamic: [
+      '**/node_modules/lodash/**/*.js',
+ ],
+};
+
 interface JwtPayload {
   userId: number;
   iat: number;
