@@ -1,0 +1,10 @@
+{
+    "routes": [
+      { "src": "/signup", "dest": "./src/pages/signup.tsx" },
+      { "src": "/signin", "dest": "./src/pages/signin.tsx" },
+      { "src": "/createClient", "dest": "./src/pages/createClient.tsx" },
+      { "src": "/editClient", "dest": "./src/pages/editClient.tsx" },
+      { "src": "/", "dest": "./src/pages/mainRouter.tsx" }
+    ]
+  }
+  
