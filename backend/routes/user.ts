@@ -2,11 +2,17 @@ import express from 'express';
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import jwt from 'jsonwebtoken';
-import JWT_SECRET from '../config.js';
-// import { authMiddleware } from '../middleware.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 const router = express.Router();
 const prisma = new PrismaClient();
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined in the environment variables.');
+}
 
 // SIGNUP FOR THE FIRST TIME ================================
 const signupBody = z.object({

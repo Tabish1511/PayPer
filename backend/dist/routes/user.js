@@ -16,10 +16,14 @@ const express_1 = __importDefault(require("express"));
 const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_js_1 = __importDefault(require("../config.js"));
-// import { authMiddleware } from '../middleware.js';
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('JWT_SECRET is not defined in the environment variables.');
+}
 // SIGNUP FOR THE FIRST TIME ================================
 const signupBody = zod_1.z.object({
     username: zod_1.z.string().email(),
@@ -57,7 +61,7 @@ router.post('/signup', (req, res) => __awaiter(void 0, void 0, void 0, function*
     });
     console.log(user.id);
     const userId = user.id;
-    const jwtToken = jsonwebtoken_1.default.sign({ userId }, config_js_1.default);
+    const jwtToken = jsonwebtoken_1.default.sign({ userId }, JWT_SECRET);
     // Add redirection to dashboard
     res.status(200).send({
         message: "User created successfully",
@@ -87,7 +91,7 @@ router.post('/signin', (req, res) => __awaiter(void 0, void 0, void 0, function*
     ;
     const userId = isUser.id;
     // console.log(userId);
-    const jwtToken = jsonwebtoken_1.default.sign({ userId }, config_js_1.default);
+    const jwtToken = jsonwebtoken_1.default.sign({ userId }, JWT_SECRET);
     // Add redirection to dashboard
     res.status(200).send({
         token: jwtToken
