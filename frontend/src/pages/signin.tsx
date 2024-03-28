@@ -5,7 +5,7 @@ import { Button } from "../components/Button"
 import { BottomWarning } from "../components/BottomWarning"
 import axios from "axios"
 import { useState } from "react"
-import { useNavigate, redirect } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export function Signin(){
     const [username, setUsername] = useState("");
@@ -28,12 +28,10 @@ export function Signin(){
                         const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
                             username,
                             password
-                        });
+                        })
                         localStorage.setItem("token", response.data.token);
-                        // navigate("/");
-                        return redirect("/");
-                        console.log("Navigate to '/'");
-                    }} label="Sign Up" />
+                        navigate('/dashboard')
+                    }} label="Sign In" />
                     <BottomWarning warning="Don't have an account? " link="Sign up" to={"/signup"}/>
                 </div>
             </div>
