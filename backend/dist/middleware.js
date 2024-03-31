@@ -37,6 +37,9 @@ function authMiddleware(req, res, next) {
     }
 }
 exports.authMiddleware = authMiddleware;
+// https://stackoverflow.com/questions/71851464/nextjs-build-failing-because-of-jsonwebtoken-in-middleware-ts
+// https://www.npmjs.com/search?q=jwt
+// https://www.youtube.com/watch?v=CNJkX9rYI8U
 // export function authMiddleware(req:Request, res:Response, next:NextFunction){
 //   const authHeader = req.headers.authorization;
 //   if (!authHeader || !authHeader.startsWith('Bearer ')) {

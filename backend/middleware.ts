@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
 // import JWT_SECRET from './config';
 import { NextFunction, Request,Response } from 'express';
 import dotenv from 'dotenv';
@@ -10,12 +11,12 @@ if (!JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined in the environment variables.');
 }
 
-export const config = {
-  runtime: "edge",
-  unstable_allowDynamic: [
-      '**/node_modules/lodash/**/*.js',
- ],
-};
+// export const config = {
+//   runtime: "edge",
+//   unstable_allowDynamic: [
+//       '**/node_modules/lodash/**/*.js',
+//  ],
+// };
 
 interface JwtPayload {
   userId: number;
@@ -51,10 +52,11 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
 
 
+// https://stackoverflow.com/questions/71851464/nextjs-build-failing-because-of-jsonwebtoken-in-middleware-ts
+// https://www.npmjs.com/search?q=jwt
 
 
-
-
+// https://www.youtube.com/watch?v=CNJkX9rYI8U
 
 
 

@@ -25,12 +25,14 @@ export function Signin(){
                         setPassword(e.target.value);
                     }} label="Password" type="password" id="password" name="password" placeholder="1234Aa@" />
                     <Button onClick={async()=>{
-                        const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
+                        await axios.post("http://localhost:3000/api/v1/user/signin", {
                             username,
                             password
                         })
-                        localStorage.setItem("token", response.data.token);
-                        navigate('/dashboard')
+                        .then((res) => {
+                            localStorage.setItem("token", res.data.token);
+                            navigate('/dashboard')
+                        })
                     }} label="Sign In" />
                     <BottomWarning warning="Don't have an account? " link="Sign up" to={"/signup"}/>
                 </div>
