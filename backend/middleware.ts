@@ -1,5 +1,6 @@
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
+import { errors } from 'jose';
 // import JWT_SECRET from './config';
 import { NextFunction, Request,Response } from 'express';
 import dotenv from 'dotenv';
@@ -7,9 +8,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
-if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET is not defined in the environment variables.');
-}
+// if (!JWT_SECRET) {
+//   throw new Error('JWT_SECRET is not defined in the environment variables.');
+// }
 
 // export const config = {
 //   runtime: "edge",
@@ -18,9 +19,8 @@ if (!JWT_SECRET) {
 //  ],
 // };
 
-interface JwtPayload {
+interface JwtPayload{
   userId: number;
-  iat: number;
 }
 
 export interface CustomRequest extends Request {
@@ -28,7 +28,7 @@ export interface CustomRequest extends Request {
 }
 
 
-export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -38,17 +38,27 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
   const token = authHeader.split(' ')[1];
 
   try {
-      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload | void;
-      if (!decoded || typeof decoded !== 'object') {
-        return res.status(401).json({ error: 'Unauthorized - Invalid token' });
-      }
-      (req as CustomRequest).userId = decoded.userId;
-      next();
-  } catch (err) {
-      console.error('JWT verification error:', err);
-      return res.status(500).json({ error: 'Internal server error' });
-  }
+    // Verify the token using 'jose' library
+    const { payload } = await jose.jwtVerify(token, new TextEncoder().encode(JWT_SECRET));
+    if (!payload || typeof payload !== 'object') {
+      return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+    }
+    //@ts-ignore
+    (req as CustomRequest).userId = (payload as JwtPayload).userId;
+    next();
+    } catch (err) {
+    if (err instanceof errors.JWTExpired) {
+      return res.status(401).json({ error: 'Unauthorized - Token expired' });
+    }
+    console.error('JWT verification error:', err);
+    return res.status(500).json({ error: 'Internal server error' });
+    }
 }
+
+
+
+
+
 
 
 
@@ -57,6 +67,95 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
 
 // https://www.youtube.com/watch?v=CNJkX9rYI8U
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import jwt from 'jsonwebtoken';
+// import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
+// // import JWT_SECRET from './config';
+// import { NextFunction, Request,Response } from 'express';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
+// const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
+
+// if (!JWT_SECRET) {
+//   throw new Error('JWT_SECRET is not defined in the environment variables.');
+// }
+
+// // export const config = {
+// //   runtime: "edge",
+// //   unstable_allowDynamic: [
+// //       '**/node_modules/lodash/**/*.js',
+// //  ],
+// // };
+
+// interface JwtPayload {
+//   userId: number;
+//   iat: number;
+// }
+
+// export interface CustomRequest extends Request {
+//   userId: number;
+// }
+
+
+// export function authMiddleware(req: Request, res: Response, next: NextFunction) {
+//   const authHeader = req.headers.authorization;
+
+//   if (!authHeader || !authHeader.startsWith('Bearer ')) {
+//       return res.status(401).json({ error: 'Unauthorized - Missing or invalid token' });
+//   }
+
+//   const token = authHeader.split(' ')[1];
+
+//   try {
+//       const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload | void;
+//       if (!decoded || typeof decoded !== 'object') {
+//         return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+//       }
+//       (req as CustomRequest).userId = decoded.userId;
+//       next();
+//   } catch (err) {
+//       console.error('JWT verification error:', err);
+//       return res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

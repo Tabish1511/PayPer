@@ -1,7 +1,8 @@
 import express from 'express';
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
+import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -10,9 +11,9 @@ const prisma = new PrismaClient();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-    throw new Error('JWT_SECRET is not defined in the environment variables.');
-}
+// if (!JWT_SECRET) {
+//     throw new Error('JWT_SECRET is not defined in the environment variables.');
+// }
 
 // SIGNUP FOR THE FIRST TIME ================================
 const signupBody = z.object({
@@ -57,8 +58,11 @@ router.post('/signup', async (req, res) => {
 
     const userId = user.id;
 
-    const jwtToken = jwt.sign({userId}, JWT_SECRET);
-
+    // const jwtToken = jwt.sign({userId}, JWT_SECRET);
+    const jwtToken = await new jose.SignJWT({ userId })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .sign(new TextEncoder().encode(JWT_SECRET));
+    
     // Add redirection to dashboard
     res.status(200).send({
         message: "User created successfully",
@@ -90,8 +94,11 @@ router.post('/signin', async (req, res) => {
     };
 
     const userId = isUser.id;
-    // console.log(userId);
-    const jwtToken = jwt.sign({userId}, JWT_SECRET);
+
+    // const jwtToken = jwt.sign({userId}, JWT_SECRET);
+    const jwtToken = await new jose.SignJWT({ userId })
+                        .setProtectedHeader({ alg: 'HS256' })
+                        .sign(new TextEncoder().encode(JWT_SECRET));
 
     // Add redirection to dashboard
     res.status(200).send({
