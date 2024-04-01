@@ -40,8 +40,8 @@ const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 // import jwt from 'jsonwebtoken';
 const jose = __importStar(require("jose")); // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 const router = express_1.default.Router();
 const prisma = new client_1.PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET;

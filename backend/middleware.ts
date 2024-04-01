@@ -3,9 +3,9 @@ import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
 import { errors } from 'jose';
 // import JWT_SECRET from './config';
 import { NextFunction, Request,Response } from 'express';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 // if (!JWT_SECRET) {

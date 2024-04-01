@@ -3,9 +3,9 @@ import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 // import jwt from 'jsonwebtoken';
 import * as jose from 'jose'; // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-dotenv.config();
+// dotenv.config();
 const router = express.Router();
 const prisma = new PrismaClient();
 

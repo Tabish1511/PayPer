@@ -31,16 +31,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authMiddleware = void 0;
 // import jwt from 'jsonwebtoken';
 const jose = __importStar(require("jose")); // <<== THIS IS WHERE YOU NEED TO MAKE THE CHANGES
 const jose_1 = require("jose");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 function authMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {

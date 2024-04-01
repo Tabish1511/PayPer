@@ -16,4 +16,4 @@ app.use("/api/v1", index_js_1.default);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-// app.listen(port);
+exports.default = app;
