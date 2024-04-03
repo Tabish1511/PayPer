@@ -200,6 +200,7 @@ router.get("/bulk", middleware_js_1.authMiddleware, (req, res) => __awaiter(void
             }
         });
         res.json({
+            //@ts-ignore
             client: clients.map(client => ({
                 id: client.id,
                 name: client.name,

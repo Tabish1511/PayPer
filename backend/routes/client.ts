@@ -209,6 +209,7 @@ router.get("/bulk", authMiddleware, async (req, res) => {
       });
 
         res.json({
+          //@ts-ignore
           client: clients.map(client => ({
               id: client.id,
               name: client.name,
