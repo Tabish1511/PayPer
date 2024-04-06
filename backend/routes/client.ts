@@ -266,36 +266,6 @@ export default router;
 
 
 
-    
-
-
-
-
-
-
-
-
-
-
-
-// SET MONTH TO THE FOLLOWING MONTH AND THEN RETURN DATE IN DATE FORMAT ============================
-
-// const newDate = new Date(); // Current date
-
-// // Get the current month and add 1 to it (for the next month)
-// const nextMonth = newDate.getMonth() + 1;
-
-// // Set the month of the newDate object to the next month
-// newDate.setMonth(nextMonth);
-
-// console.log(newDate); // Output the new date object for the following month
-
-
-
-
-
-
-
 
 
 

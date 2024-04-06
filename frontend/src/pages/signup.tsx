@@ -33,14 +33,18 @@ export function Signup(){
                         setPassword(e.target.value);
                     }} label="Password" type="password" id="password" name="password" placeholder="1234Aa@" />
                     <Button onClick={async()=>{
-                        const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                        // const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+                            const response = await axios.post("http://localhost:8787/api/v1/signup", {
                             username,
                             firstName,
                             lastName,
                             password
-                        });
-                        localStorage.setItem("token", response.data.token);
-                        navigate('/');
+                        }).then((res) => {
+                            // localStorage.setItem("token", res.data.token);
+                            navigate('/');
+                        }).catch((err) => {
+                            console.error("Error", err);
+                        })
                     }} label="Sign Up" />
                     <BottomWarning warning="Already have an account? " link="Sign in" to={"/signin"}/>
                 </div>
