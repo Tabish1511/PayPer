@@ -34,7 +34,7 @@ export function Signup(){
                     }} label="Password" type="password" id="password" name="password" placeholder="1234Aa@" />
                     <Button onClick={async()=>{
                         // const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
-                            const response = await axios.post("http://localhost:8787/api/v1/signup", {
+                            const response = await axios.post("http://localhost:34631/api/v1/signup", {
                             username,
                             firstName,
                             lastName,

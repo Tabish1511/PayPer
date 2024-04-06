@@ -18,18 +18,18 @@ export function CreateClient() {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/api/v1/client/create", {
+            const response = await axios.post("http://localhost:35531/api/v1/client/create", {
                 name,
                 itemDescription,
                 phone,
                 totalAmount: parseFloat(totalAmount),
                 deposit: parseFloat(deposit),
                 months: parseInt(months)
-            }, {
+            }/*, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("token")
                 }
-            });
+            }*/);
             if (response.status === 200) {
                 navigate("/");
             }
